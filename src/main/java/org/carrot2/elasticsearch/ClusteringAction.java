@@ -1216,18 +1216,31 @@ public class ClusteringAction
       public static String NAME = "_search_with_clusters";
 
       public RestClusteringAction(RestController controller) {
-         controller.registerHandler(POST, "/" + NAME, this);
+         /*controller.registerHandler(POST, "/" + NAME, this);
          controller.registerHandler(POST, "/{index}/" + NAME, this);
          controller.registerHandler(POST, "/{index}/{type}/" + NAME, this);
 
          controller.registerHandler(GET, "/" + NAME, this);
          controller.registerHandler(GET, "/{index}/" + NAME, this);
-         controller.registerHandler(GET, "/{index}/{type}/" + NAME, this);
+         controller.registerHandler(GET, "/{index}/{type}/" + NAME, this);*/
+         super();
       }
 
       @Override
       public String getName() {
          return NAME;
+      }
+
+      @Override
+      public List<Route> routes() {
+         return List.of(
+            new Route(POST, "/" + NAME),
+            new Route(POST, "/{index}/" + NAME),
+            new Route(POST, "/{index}/{type}/" + NAME),
+            new Route(GET, "/" + NAME),
+            new Route(GET, "/{index}/" + NAME),
+            new Route(GET, "/{index}/{type}/" + NAME)
+         );
       }
 
       @Override

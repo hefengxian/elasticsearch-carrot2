@@ -1,17 +1,18 @@
 
 // This plugin's version (typically must match that of ES).
-version = '7.6.0.1'
+version = '7.8.0'
 group = 'org.carrot2'
 
 buildscript {
   ext {
-    version_es = '7.6.0'
+    version_es = '7.8.0'
     version_c2 = 'org.carrot2:carrot2-core:4.0.0-beta3'
   }
 
   repositories {
-    mavenCentral()
-    jcenter()
+    maven { url 'https://maven.aliyun.com/repository/public/' }
+    // mavenCentral()
+    // jcenter()
   }
 
   dependencies {
@@ -19,14 +20,15 @@ buildscript {
   }
 }
 
-apply plugin: 'java-library'
+apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'elasticsearch.esplugin'
-apply plugin: 'nebula.maven-base-publish'
+// apply plugin: 'nebula.maven-base-publish'
 
 repositories {
-  mavenLocal()
-  mavenCentral()
+  maven { url 'https://maven.aliyun.com/repository/public/' }
+  // mavenLocal()
+  // mavenCentral()
 }
 
 ext {
@@ -54,7 +56,7 @@ dependencies {
   }
   compile version_c2
 
-  testCompile "com.fasterxml.jackson.core:jackson-core:2.8.11"
+  testCompile "com.fasterxml.jackson.core:jackson-core:2.10.4"
   testCompile "com.fasterxml.jackson.core:jackson-annotations:2.8.11"
   testCompile "com.fasterxml.jackson.core:jackson-databind:2.8.11"
 
@@ -82,7 +84,7 @@ thirdPartyAudit.enabled = false
 
 // Disable some stuff we don't need
 testingConventions {
-  enabled = true
+  enabled = false
 }
 
 integTest {
@@ -110,6 +112,7 @@ bundlePlugin {
 }
 
 // Configure publishing.
+/*
 configure(rootProject) {
   apply plugin: 'maven-publish'
   apply plugin: 'signing'
@@ -186,3 +189,4 @@ configure(rootProject) {
     dependsOn publishMavenPublicationToSonatypeRepository
   }
 }
+*/

@@ -205,13 +205,23 @@ public class ListAlgorithmsAction extends ActionType<ListAlgorithmsAction.ListAl
         public RestListAlgorithmsAction(
                 RestController controller) {
 
-            controller.registerHandler(Method.POST, "/" + NAME, this);
-            controller.registerHandler(Method.GET, "/" + NAME, this);
+//            controller.registerHandler(Method.POST, "/" + NAME, this);
+//            controller.registerHandler(Method.GET, "/" + NAME, this);
+            super();
         }
 
         @Override
         public String getName() {
             return NAME;
+        }
+
+        @Override
+        public List<Route> routes() {
+            return List.of(
+                new Route(Method.POST, "/" + NAME),
+                new Route(Method.GET, "/" + NAME)
+            );
+            // return null;
         }
 
         @Override

@@ -21,6 +21,7 @@ import org.elasticsearch.env.NodeEnvironment;
 import org.elasticsearch.plugins.ActionPlugin;
 import org.elasticsearch.plugins.ExtensiblePlugin;
 import org.elasticsearch.plugins.Plugin;
+import org.elasticsearch.repositories.RepositoriesService;
 import org.elasticsearch.rest.RestController;
 import org.elasticsearch.rest.RestHandler;
 import org.elasticsearch.script.ScriptService;
@@ -90,7 +91,7 @@ public class ClusteringPlugin extends Plugin implements ExtensiblePlugin, Action
           new ListAlgorithmsAction.RestListAlgorithmsAction(restController));
    }
 
-   @Override
+   /*@Override
    public Collection<Object> createComponents(Client client, ClusterService clusterService,
                                               ThreadPool threadPool, ResourceWatcherService resourceWatcherService,
                                               ScriptService scriptService, NamedXContentRegistry xContentRegistry,
@@ -101,6 +102,23 @@ public class ClusteringPlugin extends Plugin implements ExtensiblePlugin, Action
          components.add(new ClusteringContext(environment,
              reorderAlgorithms(algorithmProviders),
              new LinkedHashMap<>(languageComponentProviders)));
+      }
+      return components;
+   }*/
+
+   @Override
+   public Collection<Object> createComponents(Client client, ClusterService clusterService, ThreadPool threadPool,
+                                              ResourceWatcherService resourceWatcherService,
+                                              ScriptService scriptService, NamedXContentRegistry xContentRegistry,
+                                              Environment environment, NodeEnvironment nodeEnvironment,
+                                              NamedWriteableRegistry namedWriteableRegistry,
+                                              IndexNameExpressionResolver indexNameExpressionResolver,
+                                              Supplier<RepositoriesService> repositoriesServiceSupplier) {
+      List<Object> components = new ArrayList<>();
+      if (pluginEnabled && !transportClient) {
+         components.add(new ClusteringContext(environment,
+                 reorderAlgorithms(algorithmProviders),
+                 new LinkedHashMap<>(languageComponentProviders)));
       }
       return components;
    }
